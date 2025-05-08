@@ -34,7 +34,7 @@ export default function FeatureList() {
       // const response = await fetch("https://api.example.com/features")
       // const data = await response.json()
 
-      // Simulated API response
+      // Simulated API response with the new JSON structure
       const data = {
         new_features: [
           {
@@ -43,12 +43,63 @@ export default function FeatureList() {
             description: "Hỗ trợ giao diện chế độ tối giúp bảo vệ mắt và tiết kiệm pin.",
             type: "UI Enhancement",
             status: "Released",
+            version: "1.0.3",
+            release_date: "2024-05-08",
             platforms: ["Web", "iOS", "Android"],
             image: "https://example.com/images/dark-mode.png",
+            documentation_link: "https://example.com/docs/dark-mode",
             developer: {
               name: "Phạm Hữu Phước",
               email: "phuoc@example.com",
+              profile_image: "https://example.com/images/developer-phuoc.png",
             },
+            features: [
+              {
+                title: "Chuyển đổi giữa chế độ tối và sáng",
+                description: "Người dùng có thể bật tắt chế độ tối ngay trong cài đặt ứng dụng.",
+              },
+              {
+                title: "Tự động chuyển đổi theo thời gian",
+                description: "Chế độ tối tự động kích hoạt vào ban đêm và chuyển sang sáng vào ban ngày.",
+              },
+              {
+                title: "Tùy chỉnh màu sắc nền và chữ",
+                description: "Cho phép người dùng chọn màu sắc cho chế độ tối theo sở thích cá nhân.",
+              },
+            ],
+            screenshots: [
+              "https://example.com/images/dark-mode-preview-1.png",
+              "https://example.com/images/dark-mode-preview-2.png",
+            ],
+            installation_guide: {
+              steps: [
+                {
+                  step_number: 1,
+                  title: "Cập nhật ứng dụng lên phiên bản mới nhất",
+                  description: "Hãy chắc chắn rằng bạn đã cập nhật ứng dụng lên phiên bản 1.0.3.",
+                },
+                {
+                  step_number: 2,
+                  title: "Truy cập vào cài đặt ứng dụng",
+                  description: "Đi tới Cài đặt > Hiển thị > Chế độ tối.",
+                },
+                {
+                  step_number: 3,
+                  title: "Kích hoạt chế độ tối",
+                  description: "Bật công tắc để chuyển sang chế độ tối.",
+                },
+              ],
+            },
+            faq: [
+              {
+                question: "Chế độ tối có hỗ trợ tất cả các trang không?",
+                answer: "Có, chế độ tối hỗ trợ toàn bộ giao diện của ứng dụng trên mọi trang.",
+              },
+              {
+                question: "Tôi có thể tùy chỉnh màu sắc của chế độ tối không?",
+                answer: "Có, bạn có thể chọn màu sắc tùy chỉnh trong phần Cài đặt > Hiển thị.",
+              },
+            ],
           },
           {
             id: "feature-002",
@@ -56,12 +107,63 @@ export default function FeatureList() {
             description: "Cho phép người dùng đăng nhập nhanh bằng vân tay hoặc khuôn mặt.",
             type: "Security",
             status: "Released",
+            version: "1.0.3",
+            release_date: "2024-05-08",
             platforms: ["iOS", "Android"],
             image: "https://example.com/images/fingerprint-login.png",
+            documentation_link: "https://example.com/docs/fingerprint-login",
             developer: {
               name: "Nguyễn Văn A",
               email: "nguyenvana@example.com",
+              profile_image: "https://example.com/images/developer-nguyen.png",
             },
+            features: [
+              {
+                title: "Đăng nhập nhanh chóng",
+                description: "Đăng nhập chỉ trong 1 giây với vân tay hoặc khuôn mặt.",
+              },
+              {
+                title: "Bảo mật cao",
+                description: "Sử dụng công nghệ mã hóa tiên tiến để bảo vệ thông tin người dùng.",
+              },
+              {
+                title: "Hỗ trợ nhiều thiết bị",
+                description: "Hoạt động trên nhiều loại thiết bị iOS và Android khác nhau.",
+              },
+            ],
+            screenshots: [
+              "https://example.com/images/fingerprint-preview-1.png",
+              "https://example.com/images/fingerprint-preview-2.png",
+            ],
+            installation_guide: {
+              steps: [
+                {
+                  step_number: 1,
+                  title: "Cập nhật ứng dụng",
+                  description: "Cập nhật lên phiên bản mới nhất từ App Store hoặc Google Play.",
+                },
+                {
+                  step_number: 2,
+                  title: "Thiết lập vân tay",
+                  description: "Vào Cài đặt > Bảo mật > Đăng nhập sinh trắc học.",
+                },
+                {
+                  step_number: 3,
+                  title: "Kích hoạt tính năng",
+                  description: "Bật tính năng đăng nhập bằng vân tay hoặc khuôn mặt.",
+                },
+              ],
+            },
+            faq: [
+              {
+                question: "Tính năng này có an toàn không?",
+                answer: "Có, chúng tôi sử dụng công nghệ mã hóa tiên tiến để bảo vệ dữ liệu sinh trắc học của bạn.",
+              },
+              {
+                question: "Tôi có thể sử dụng cả mật khẩu và vân tay không?",
+                answer: "Có, bạn có thể chọn phương thức đăng nhập tùy thích mỗi lần sử dụng.",
+              },
+            ],
           },
           {
             id: "feature-003",
@@ -69,12 +171,63 @@ export default function FeatureList() {
             description: "Người dùng có thể tùy chỉnh thông báo đẩy theo sở thích cá nhân.",
             type: "Notification",
             status: "Released",
+            version: "1.0.3",
+            release_date: "2024-05-08",
             platforms: ["Web", "iOS", "Android"],
             image: "https://example.com/images/notification-settings.png",
+            documentation_link: "https://example.com/docs/custom-push",
             developer: {
               name: "Trần Thị B",
               email: "tranthib@example.com",
+              profile_image: "https://example.com/images/developer-tran.png",
             },
+            features: [
+              {
+                title: "Lọc thông báo theo loại",
+                description: "Chọn loại thông báo bạn muốn nhận: tin tức, cập nhật, khuyến mãi.",
+              },
+              {
+                title: "Đặt lịch nhận thông báo",
+                description: "Chọn thời gian trong ngày bạn muốn nhận thông báo.",
+              },
+              {
+                title: "Tùy chỉnh âm thanh",
+                description: "Chọn âm thanh riêng cho từng loại thông báo.",
+              },
+            ],
+            screenshots: [
+              "https://example.com/images/notification-preview-1.png",
+              "https://example.com/images/notification-preview-2.png",
+            ],
+            installation_guide: {
+              steps: [
+                {
+                  step_number: 1,
+                  title: "Vào cài đặt thông báo",
+                  description: "Mở ứng dụng và vào Cài đặt > Thông báo.",
+                },
+                {
+                  step_number: 2,
+                  title: "Chọn loại thông báo",
+                  description: "Chọn loại thông báo bạn muốn tùy chỉnh.",
+                },
+                {
+                  step_number: 3,
+                  title: "Tùy chỉnh cài đặt",
+                  description: "Điều chỉnh các tùy chọn theo sở thích của bạn.",
+                },
+              ],
+            },
+            faq: [
+              {
+                question: "Tôi có thể tắt hoàn toàn thông báo không?",
+                answer: "Có, bạn có thể tắt tất cả thông báo hoặc chỉ tắt một số loại thông báo cụ thể.",
+              },
+              {
+                question: "Thông báo có hoạt động khi ứng dụng đóng không?",
+                answer: "Có, thông báo đẩy sẽ vẫn hoạt động ngay cả khi ứng dụng không mở.",
+              },
+            ],
           },
         ],
       }

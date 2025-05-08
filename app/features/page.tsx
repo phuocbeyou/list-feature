@@ -1,12 +1,13 @@
 "use client"
-import { Provider } from "react-redux"
-import { store } from "@/lib/redux/store"
+// Thay thế import Provider từ react-redux
+import ReduxProvider from "@/components/redux-provider"
 import FeatureList from "@/components/feature-list"
 import { Card, CardContent } from "@/components/ui/card"
 
+// Thay thế đoạn code bọc Provider
 export default function FeaturesPage() {
   return (
-    <Provider store={store}>
+    <ReduxProvider>
       <div className="container mx-auto py-10 px-4">
         <div className="max-w-5xl mx-auto">
           <h1 className="text-3xl font-bold mb-2 text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -21,6 +22,6 @@ export default function FeaturesPage() {
           </Card>
         </div>
       </div>
-    </Provider>
+    </ReduxProvider>
   )
 }
