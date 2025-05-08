@@ -15,6 +15,9 @@ export const featuresSlice = createSlice({
   name: "features",
   initialState,
   reducers: {
+    importFeatures: (state, action: PayloadAction<Feature[]>) => {
+      state.features = action.payload
+    },
     addFeature: (state, action: PayloadAction<Feature>) => {
       state.features.push(action.payload)
     },
@@ -24,26 +27,9 @@ export const featuresSlice = createSlice({
         state.features[index] = action.payload
       }
     },
-    deleteFeature: (state, action: PayloadAction<string>) => {
-      state.features = state.features.filter((feature) => feature.id !== action.payload)
-    },
-    importFeatures: (state, action: PayloadAction<Feature[]>) => {
-      // Check for duplicates and merge or add as needed
-      action.payload.forEach((newFeature) => {
-        const existingIndex = state.features.findIndex((feature) => feature.id === newFeature.id)
-
-        if (existingIndex !== -1) {
-          // Update existing feature
-          state.features[existingIndex] = newFeature
-        } else {
-          // Add new feature
-          state.features.push(newFeature)
-        }
-      })
-    },
   },
 })
 
-export const { addFeature, updateFeature, deleteFeature, importFeatures } = featuresSlice.actions
+export const { importFeatures, addFeature, updateFeature } = featuresSlice.actions
 
 export default featuresSlice.reducer

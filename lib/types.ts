@@ -6,10 +6,8 @@ export interface Feature {
   status: string
   platforms: string[]
   image: string
-  documentation_link: string
   developer: {
     name: string
     email: string
   }
-  [key: string]: any
 }

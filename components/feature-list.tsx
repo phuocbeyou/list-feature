@@ -9,98 +9,99 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label"
 import FeatureCard from "./feature-card"
 import type { Feature } from "@/lib/types"
-import { AlertCircle } from "lucide-react"
+import { AlertCircle, Search, RefreshCw } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Skeleton } from "@/components/ui/skeleton"
 import EmptyState from "./empty-state"
+import { Button } from "@/components/ui/button"
 
 export default function FeatureList() {
   const features = useSelector((state: RootState) => state.features.features)
   const [searchTerm, setSearchTerm] = useState("")
   const [filterType, setFilterType] = useState("")
   const [isLoading, setIsLoading] = useState(true)
+  const [isRefreshing, setIsRefreshing] = useState(false)
   const dispatch = useDispatch()
 
-  // Fetch features from API
-  useEffect(() => {
-    const fetchFeatures = async () => {
-      setIsLoading(true)
-      try {
-        // Simulating API call with timeout
-        await new Promise((resolve) => setTimeout(resolve, 1500))
+  const fetchFeatures = async () => {
+    try {
+      setIsRefreshing(true)
 
-        // In a real app, you would fetch from an actual API
-        // const response = await fetch('/api/features')
-        // const data = await response.json()
+      // Simulate API call with timeout
+      await new Promise((resolve) => setTimeout(resolve, 1000))
 
-        // Using the sample data for demonstration
-        const data = {
-          version: "1.0.3",
-          release_date: "2024-05-08",
-          new_features: [
-            {
-              id: "feature-001",
-              title: "Chế độ tối (Dark Mode)",
-              description: "Hỗ trợ giao diện chế độ tối giúp bảo vệ mắt và tiết kiệm pin.",
-              type: "UI Enhancement",
-              status: "Released",
-              platforms: ["Web", "iOS", "Android"],
-              image: "https://example.com/images/dark-mode.png",
-              documentation_link: "https://example.com/docs/dark-mode",
-              developer: {
-                name: "Phạm Hữu Phước",
-                email: "phuoc@example.com",
-              },
-            },
-            {
-              id: "feature-002",
-              title: "Đăng nhập bằng vân tay",
-              description: "Cho phép người dùng đăng nhập nhanh bằng vân tay hoặc khuôn mặt.",
-              type: "Security",
-              status: "Beta",
-              platforms: ["iOS", "Android"],
-              image: "https://example.com/images/fingerprint-login.png",
-              documentation_link: "https://example.com/docs/fingerprint-login",
-              developer: {
-                name: "Nguyễn Văn A",
-                email: "nguyenvana@example.com",
-              },
-            },
-            {
-              id: "feature-003",
-              title: "Tùy chỉnh thông báo đẩy",
-              description: "Người dùng có thể tùy chỉnh thông báo đẩy theo sở thích cá nhân.",
-              type: "Notification",
-              status: "Released",
-              platforms: ["Web", "iOS", "Android"],
-              image: "https://example.com/images/notification-settings.png",
-              documentation_link: "https://example.com/docs/custom-push",
-              developer: {
-                name: "Trần Thị B",
-                email: "tranthib@example.com",
-              },
-            },
-          ],
-        }
+      // In a real application, you would use a real API endpoint
+      // const response = await fetch("https://api.example.com/features")
+      // const data = await response.json()
 
-        dispatch(importFeatures(data.new_features))
-      } catch (error) {
-        console.error("Error fetching features:", error)
-      } finally {
-        setIsLoading(false)
+      // Simulated API response
+      const data = {
+        new_features: [
+          {
+            id: "feature-001",
+            title: "Chế độ tối (Dark Mode)",
+            description: "Hỗ trợ giao diện chế độ tối giúp bảo vệ mắt và tiết kiệm pin.",
+            type: "UI Enhancement",
+            status: "Released",
+            platforms: ["Web", "iOS", "Android"],
+            image: "https://example.com/images/dark-mode.png",
+            developer: {
+              name: "Phạm Hữu Phước",
+              email: "phuoc@example.com",
+            },
+          },
+          {
+            id: "feature-002",
+            title: "Đăng nhập bằng vân tay",
+            description: "Cho phép người dùng đăng nhập nhanh bằng vân tay hoặc khuôn mặt.",
+            type: "Security",
+            status: "Released",
+            platforms: ["iOS", "Android"],
+            image: "https://example.com/images/fingerprint-login.png",
+            developer: {
+              name: "Nguyễn Văn A",
+              email: "nguyenvana@example.com",
+            },
+          },
+          {
+            id: "feature-003",
+            title: "Tùy chỉnh thông báo đẩy",
+            description: "Người dùng có thể tùy chỉnh thông báo đẩy theo sở thích cá nhân.",
+            type: "Notification",
+            status: "Released",
+            platforms: ["Web", "iOS", "Android"],
+            image: "https://example.com/images/notification-settings.png",
+            developer: {
+              name: "Trần Thị B",
+              email: "tranthib@example.com",
+            },
+          },
+        ],
       }
-    }
 
+      dispatch(importFeatures(data.new_features))
+    } catch (error) {
+      console.error("Error fetching features:", error)
+    } finally {
+      setIsLoading(false)
+      setIsRefreshing(false)
+    }
+  }
+
+  useEffect(() => {
     fetchFeatures()
-  }, [dispatch])
+  }, [])
+
+  const handleRefresh = () => {
+    fetchFeatures()
+  }
 
   const filteredFeatures = features.filter((feature) => {
     const matchesSearch =
       feature.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      feature.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      feature.id.toLowerCase().includes(searchTerm.toLowerCase())
+      feature.description.toLowerCase().includes(searchTerm.toLowerCase())
 
-    const matchesType = filterType ? feature.type === filterType : true
+    const matchesType = filterType && filterType !== "all" ? feature.type === filterType : true
 
     return matchesSearch && matchesType
   })
@@ -114,25 +115,29 @@ export default function FeatureList() {
 
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="col-span-1 md:col-span-2">
-          <Label htmlFor="search" className="mb-2 block">
-            Tìm kiếm
+      <div className="flex flex-col md:flex-row gap-4 items-end">
+        <div className="flex-1">
+          <Label htmlFor="search" className="text-sm font-medium text-gray-700 mb-1.5 block">
+            Tìm kiếm tính năng
           </Label>
-          <Input
-            id="search"
-            placeholder="Tìm kiếm theo tiêu đề, mô tả hoặc ID..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="bg-white/50 backdrop-blur-sm"
-          />
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+            <Input
+              id="search"
+              placeholder="Tìm kiếm theo tiêu đề, mô tả..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-9 bg-white border-gray-200"
+            />
+          </div>
         </div>
-        <div>
-          <Label htmlFor="type-filter" className="mb-2 block">
+
+        <div className="w-full md:w-64">
+          <Label htmlFor="type-filter" className="text-sm font-medium text-gray-700 mb-1.5 block">
             Loại tính năng
           </Label>
           <Select value={filterType} onValueChange={setFilterType}>
-            <SelectTrigger id="type-filter" className="bg-white/50 backdrop-blur-sm">
+            <SelectTrigger id="type-filter" className="bg-white border-gray-200">
               <SelectValue placeholder="Tất cả" />
             </SelectTrigger>
             <SelectContent>
@@ -145,12 +150,23 @@ export default function FeatureList() {
             </SelectContent>
           </Select>
         </div>
+
+        <Button
+          variant="outline"
+          size="icon"
+          onClick={handleRefresh}
+          disabled={isRefreshing}
+          className="h-10 w-10 shrink-0"
+        >
+          <RefreshCw className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`} />
+          <span className="sr-only">Làm mới</span>
+        </Button>
       </div>
 
       {features.length === 0 ? (
         <EmptyState />
       ) : filteredFeatures.length === 0 ? (
-        <Alert>
+        <Alert className="bg-blue-50 border-blue-100 text-blue-800">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>Không tìm thấy kết quả</AlertTitle>
           <AlertDescription>
@@ -171,15 +187,16 @@ export default function FeatureList() {
 function FeatureListSkeleton() {
   return (
     <div className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="col-span-1 md:col-span-2">
-          <Skeleton className="h-5 w-20 mb-2" />
+      <div className="flex flex-col md:flex-row gap-4 items-end">
+        <div className="flex-1">
+          <Skeleton className="h-5 w-32 mb-1.5" />
           <Skeleton className="h-10 w-full" />
         </div>
-        <div>
-          <Skeleton className="h-5 w-32 mb-2" />
+        <div className="w-full md:w-64">
+          <Skeleton className="h-5 w-24 mb-1.5" />
           <Skeleton className="h-10 w-full" />
         </div>
+        <Skeleton className="h-10 w-10 rounded-md shrink-0" />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
@@ -187,20 +204,16 @@ function FeatureListSkeleton() {
           .fill(0)
           .map((_, index) => (
             <div key={index} className="border rounded-lg p-4 space-y-4">
-              <div className="flex justify-between">
-                <Skeleton className="h-6 w-3/4" />
-                <Skeleton className="h-6 w-16 rounded-full" />
-              </div>
+              <Skeleton className="h-5 w-24 rounded-full" />
+              <Skeleton className="h-6 w-3/4" />
               <Skeleton className="h-4 w-1/3" />
               <Skeleton className="h-40 w-full rounded-md" />
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-full" />
-              <div className="grid grid-cols-2 gap-2">
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-full" />
-              </div>
-              <div className="flex justify-between pt-4">
-                <Skeleton className="h-4 w-1/3" />
+              <div className="flex flex-wrap gap-1">
+                <Skeleton className="h-6 w-16 rounded-full" />
+                <Skeleton className="h-6 w-20 rounded-full" />
+                <Skeleton className="h-6 w-16 rounded-full" />
               </div>
             </div>
           ))}
